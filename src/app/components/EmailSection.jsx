@@ -65,7 +65,7 @@ const EmailSection = () => {
             <Image src="/linkedin.svg" alt="Linkedin Icon" width={40} height={40} />
           </Link>
           <Link href="https://leetcode.com/Bhanucode/">
-            <Image src="/Leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
+            <Image src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
           </Link>
         </div>
       </div>

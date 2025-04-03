@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.0.18",
     "@react-three/drei": "^9.105.6",
     "@react-three/fiber": "^8.16.8",
+    "@svgr/webpack": "^8.1.0",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.15",

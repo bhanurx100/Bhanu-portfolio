@@ -65,12 +65,12 @@ const EmailSection = () => {
             <Image src="/linkedin.svg" alt="Linkedin Icon" width={40} height={40} />
           </Link>
           <Link href="https://leetcode.com/Bhanucode/">
-            <Image src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
+            <img src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
           </Link>
         </div>
       </div>
       <div>
-      {emailSubmitted ? (
+        {emailSubmitted ? (
           <div className="text-green-500 text-sm mt-2 drop-shadow-md">
             <p className="text-lg font-semibold">Thank you for your message!</p>
             <p>I’ll get back to you soon.</p>

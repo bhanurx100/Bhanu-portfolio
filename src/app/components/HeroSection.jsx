@@ -58,7 +58,7 @@ const HeroSection = () => {
         >
           <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-[450px] lg:h-[450px] relative">
             <Image
-              src="/tech/mainIconsDark.svg"
+              src="/github.svg"
               alt="work icons"
               className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               width={450}

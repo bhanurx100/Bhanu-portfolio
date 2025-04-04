@@ -69,8 +69,8 @@ const EmailSection = () => {
       >
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <p className="text-[#ADB7BE] mb-4 max-w-md drop-shadow-md">
-            I'm currently looking for new opportunities, my inbox is always open.
-            Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            I&apos;m currently looking for new opportunities, my inbox is always open.
+            Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
           </p>
           <div className="socials flex flex-row gap-2">
             <Link href="https://github.com/bhanurx100">
@@ -80,7 +80,7 @@ const EmailSection = () => {
               <Image src="/linkedin.svg" alt="Linkedin Icon" width={40} height={40} />
             </Link>
             <Link href="https://leetcode.com/Bhanucode/">
-              <img src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
+              <Image src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
             </Link>
           </div>
         </div>
@@ -88,7 +88,7 @@ const EmailSection = () => {
           {emailSubmitted ? (
             <div className="text-green-500 text-sm mt-2 drop-shadow-md text-center">
               <p className="text-lg font-semibold">Thank you for your message!</p>
-              <p>I’ll get back to you soon.</p>
+              <p>I&apos;ll get back to you soon.</p>
             </div>
           ) : (
             <form className="flex flex-col" onSubmit={handleSubmit}>

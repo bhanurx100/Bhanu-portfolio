@@ -13,10 +13,10 @@ export default function Home() {
         <div className="py-24 lg:py-8">
           <HeroSection />
         </div>
-        <div className="py-2 lg:py-8">
+        <div className="py-4 lg:py-8">
           <AboutSection />
         </div>
-        <div className="py-2 lg:py-4">
+        <div className="py-8 lg:py-4">
           <ProjectsSection />
         </div>
         <div className="py-8 lg:py-16">

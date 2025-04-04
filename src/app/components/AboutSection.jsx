@@ -10,14 +10,14 @@ const AboutSection = () => {
 
   return (
     <>
-      <section className="text-white relative z-10 py-16" id="about"> {/* Added py-4 */}
-        <div className="text-center px-4">
+      <section className="text-white relative z-10 py-16 min-h-[70vh] sm:min-h-[80vh]" id="about">
+        <div className="text-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16">
           <motion.h2
             variants={slideInFromLeft(0.5)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-4xl font-bold text-green-800 mb-4 drop-shadow-lg" // Changed to light green
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-8 drop-shadow-lg"
           >
             About Me
           </motion.h2>
@@ -26,35 +26,34 @@ const AboutSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-base lg:text-lg max-w-2xl mx-auto drop-shadow-md"
+            className="text-base lg:text-lg max-w-3xl mx-auto drop-shadow-md leading-relaxed sm:leading-loose"
           >
-            I am a full stack web developer with a passion for creating
+            Aspiring full stack web developer with a passion for creating
             interactive and responsive web applications. I have experience
-            working with Python, JavaScript, SQL, HTML, CSS, React.js, Tailwind
-            CSS, Next.js, Chart.js, and Firebase. I am a quick learner and I am
-            always looking to expand my knowledge and skill set. I am a team
-            player and I am excited to work with others to create amazing
-            applications.
+            working with Python, JavaScript, SQL, React.js, Tailwind CSS,
+            Next.js, and Firebase. I am a quick learner and I am always looking
+            to expand my knowledge and skill set. I am a team player and I am
+            excited to work with others to create amazing applications.
           </motion.p>
         </div>
       </section>
 
-      <section className="text-green-800 relative z-10 py-12"> {/* Added py-4 */}
-        <div className="text-center">
+      <section className="text-green-800 relative z-10 py-12">
+        <div className="text-center px-6 sm:px-8 lg:px-12">
           <motion.h2
             variants={slideInFromLeft(0.5)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-4xl font-bold text-green-800 mb-4 drop-shadow-lg" // Changed to light green
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-8 drop-shadow-lg"
           >
             Skills
           </motion.h2>
         </div>
       </section>
 
-      <section className="text-white relative z-10 py-2"> {/* Added py-4 */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-6 px-4 max-w-5xl mx-auto">
+      <section className="text-white relative z-10 py-12">
+        <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-x-6 gap-y-10 px-6 sm:px-8 lg:px-12 max-w-5xl mx-auto">
           {Skill_data.map((skill, index) => {
             const className = skillsToTint.includes(skill.skill_name)
               ? "opacity-90 hover:opacity-100 transition-opacity blue-tint"

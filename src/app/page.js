@@ -10,13 +10,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col bg-transparent">
       <Navbar />
       <div className="container mx-auto">
-        <div className="py-8 lg:py-16">
+        <div className="py-24 lg:py-8">
           <HeroSection />
         </div>
-        <div className="py-8 lg:py-16">
+        <div className="py-2 lg:py-8">
           <AboutSection />
         </div>
-        <div className="py-8 lg:py-16">
+        <div className="py-2 lg:py-4">
           <ProjectsSection />
         </div>
         <div className="py-8 lg:py-16">

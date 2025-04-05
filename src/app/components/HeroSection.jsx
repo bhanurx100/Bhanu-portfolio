@@ -9,8 +9,8 @@ const SkillsCloud = dynamic(() => import("./SkillsCloud"), { ssr: false });
 
 const HeroSection = () => {
   return (
-    <section className="relative py-2 min-h-[90vh] sm:min-h-screen">
-      <div className="grid grid-cols-1 sm:grid-cols-12 relative z-20 container mx-auto px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 gap-2 sm:gap-4 lg:gap-8">
+    <section className="relative py-2 ">
+      <div className="grid grid-cols-1 sm:grid-cols-12 relative z-20 container mx-auto px-6 sm:px-8 lg:px-12 py-4 sm:py-6 lg:py-8 gap-2 sm:gap-4 lg:gap-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -19,7 +19,7 @@ const HeroSection = () => {
         >
           <h1 className="text-white mb-4 text-3xl sm:text-4xl lg:text-7xl lg:leading-normal font-extrabold drop-shadow-lg">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-500">
-              Hello, I&apos;m{" "}
+              Hello, I'm{" "}
             </span>
             <br />
             <TypeAnimation

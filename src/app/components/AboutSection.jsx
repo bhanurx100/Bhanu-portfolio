@@ -10,14 +10,15 @@ const AboutSection = () => {
 
   return (
     <>
-      <section className="text-white relative z-10 py-16 min-h-[70vh] sm:min-h-[80vh]" id="about">
-        <div className="text-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16">
+      {/* About Me Section */}
+      <section className="text-white py-10" id="about">
+        <div className="text-center px-4 sm:px-6">
           <motion.h2
             variants={slideInFromLeft(0.5)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-8 drop-shadow-lg"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-6"
           >
             About Me
           </motion.h2>
@@ -26,7 +27,7 @@ const AboutSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-base lg:text-lg max-w-3xl mx-auto drop-shadow-md leading-relaxed sm:leading-loose"
+            className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed"
           >
             Aspiring full stack web developer with a passion for creating
             interactive and responsive web applications. I have experience
@@ -38,49 +39,77 @@ const AboutSection = () => {
         </div>
       </section>
 
-      <section className="text-green-800 relative z-10 py-12">
-        <div className="text-center px-6 sm:px-8 lg:px-12">
+      {/* Skills Heading */}
+      <section className="text-green-800 py-10">
+        <div className="text-center px-4">
           <motion.h2
             variants={slideInFromLeft(0.5)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-8 drop-shadow-lg"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold"
           >
             Skills
           </motion.h2>
         </div>
       </section>
 
-      <section className="text-white relative z-10 py-12">
-        <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-x-6 gap-y-10 px-6 sm:px-8 lg:px-12 max-w-5xl mx-auto">
-          {Skill_data.map((skill, index) => {
-            const className = skillsToTint.includes(skill.skill_name)
-              ? "opacity-90 hover:opacity-100 transition-opacity blue-tint"
-              : "opacity-90 hover:opacity-100 transition-opacity";
+      {/* Skills Logo Layout */}
+      <section className="py-10 px-4 sm:px-6 flex justify-center">
+        <div className="max-w-[900px] w-full">
+          {/* Reverse Pyramid for laptop/tablet (md and up) */}
+          <div className="hidden md:flex md:flex-col md:items-center md:justify-center">
+            <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-6 w-full">
+              {Skill_data.slice(0, 7).map((skill, index) => renderSkill(skill, index, 0, "w-[70px] h-[70px]"))}
+            </div>
+            <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-6 w-[90%] md:w-[80%] lg:w-[70%]">
+              {Skill_data.slice(7, 12).map((skill, index) => renderSkill(skill, index + 7, 1, "w-[70px] h-[70px]"))}
+            </div>
+            <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-6 w-[70%] md:w-[60%] lg:w-[50%]">
+              {Skill_data.slice(12, 15).map((skill, index) => renderSkill(skill, index + 12, 2, "w-[70px] h-[70px]"))}
+            </div>
+            <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-6 w-[50%] md:w-[40%] lg:w-[30%]">
+              {Skill_data.slice(15, 17).map((skill, index) => renderSkill(skill, index + 15, 3, "w-[70px] h-[70px]"))}
+            </div>
+          </div>
 
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="flex justify-center items-center"
-              >
-                <Image
-                  src={skill.Image}
-                  alt={skill.skill_name}
-                  width={32}
-                  height={32}
-                  className={`${className} w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12`}
-                />
-              </motion.div>
-            );
-          })}
+          {/* Grid for mobile (below md) */}
+          <div className="md:hidden flex flex-wrap gap-2 justify-center">
+            {Skill_data.map((skill, index) => renderSkill(skill, index, 0, "w-[50px] h-[50px]"))}
+          </div>
         </div>
       </section>
     </>
+  );
+};
+
+// Helper function to render skill logo
+const renderSkill = (skill, index, rowIndex, logoSize) => {
+  const isTinted = ["Express js", "Shadcn"].includes(skill.skill_name);
+  // Adjust MongoDB logo size to ensure it fits well with object-contain
+  const adjustedLogoSize = skill.skill_name === "MongoDB" ? "w-[25px] h-[25px]" : logoSize;
+  const width = parseInt(adjustedLogoSize.split(" ")[0].replace("w-[", "").replace("px]", ""));
+  const height = parseInt(adjustedLogoSize.split(" ")[1].replace("h-[", "").replace("px]", ""));
+  // Use object-contain for all logos to ensure full visibility
+  const imageClass = "object-contain";
+
+  return (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3, delay: rowIndex * 0.1 + (index % 7) * 0.1 }}
+      className={`bg-gray-800 bg-opacity-70 rounded-lg p-2 shadow-lg flex justify-center items-center overflow-hidden ${adjustedLogoSize}`}
+    >
+      <Image
+        src={skill.Image}
+        alt={skill.skill_name}
+        width={width}
+        height={height}
+        className={`${imageClass} opacity-90 hover:opacity-100 transition-opacity`}
+      />
+    </motion.div>
   );
 };
 

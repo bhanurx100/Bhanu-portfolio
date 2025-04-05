@@ -76,7 +76,7 @@ const ProjectsSection = () => {
           isSelected={tag === "Web"}
         />
       </motion.div>
-      <div ref={ref} className="flex flex-col gap-8 max-w-2xl mx-auto">
+      <div ref={ref} className="flex flex-col gap-12 max-w-2xl mx-auto">
         {filteredProjects.map((project, index) => (
           <motion.div
             key={index}

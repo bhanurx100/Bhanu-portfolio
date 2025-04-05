@@ -4,22 +4,24 @@ import AboutSection from "./components/AboutSection";
 import ProjectsSection from "./components/ProjectsSection";
 import EmailSection from "./components/EmailSection";
 import Footer from "./components/Footer";
+import StarCanvas from "./components/StarCanvas";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-transparent">
+    <main className="flex flex-col bg-transparent relative">
+      <StarCanvas />
       <Navbar />
-      <div className="container mx-auto">
-        <div className="py-24 lg:py-8">
+      <div className="container mx-auto pt-4 lg:pt-8 relative z-10">
+        <div className="py-8 lg:py-12">
           <HeroSection />
         </div>
-        <div className="py-4 lg:py-8">
+        <div className="py-8 lg:py-12">
           <AboutSection />
         </div>
-        <div className="py-8 lg:py-4">
+        <div className="py-8 lg:py-12">
           <ProjectsSection />
         </div>
-        <div className="py-8 lg:py-16">
+        <div className="py-8 lg:py-12">
           <EmailSection />
         </div>
       </div>

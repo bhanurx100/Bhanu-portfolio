@@ -56,7 +56,7 @@ const EmailSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-8 drop-shadow-lg text-center"
+        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-800 mb-10 drop-shadow-lg text-center"
       >
         Contact
       </motion.h5>
@@ -68,19 +68,22 @@ const EmailSection = () => {
         className="grid md:grid-cols-2 gap-8 z-10"
       >
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <p className="text-[#ADB7BE] mb-4 max-w-md drop-shadow-md">
-            I&apos;m currently looking for new opportunities, my inbox is always open.
-            Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
+          <p className="text-[#ADB7BE] text-lg sm:text-xl lg:text-2xl mb-6 max-w-md drop-shadow-md">
+            I'm currently looking for new opportunities, my inbox is always open.
+            Whether you have a question or just want to say hi, I'll try my best to get back to you!
           </p>
-          <div className="socials flex flex-row gap-2">
-            <Link href="https://github.com/bhanurx100">
-              <Image src="/github.svg" alt="Github Icon" width={40} height={40} />
+          <div className="socials flex flex-row gap-6 mt-6">
+            <Link href="https://github.com/bhanurx100" className="hover:opacity-80 transition-opacity">
+              <Image src="/github.svg" alt="Github Icon" width={43} height={40} />
             </Link>
-            <Link href="https://linkedin.com/in/bhanurx100">
+            <Link href="https://linkedin.com/in/bhanurx100" className="hover:opacity-80 transition-opacity">
               <Image src="/linkedin.svg" alt="Linkedin Icon" width={40} height={40} />
             </Link>
-            <Link href="https://leetcode.com/Bhanucode/">
+            <Link href="https://leetcode.com/Bhanucode/" className="hover:opacity-80 transition-opacity">
               <Image src="/leetcode.svg" alt="Leetcode Icon" width={40} height={40} />
+            </Link>
+            <Link href="https://x.com/Bhanu_rx100" className="hover:opacity-80 transition-opacity">
+              <Image src="/x.svg" alt="X Icon" width={50} height={40} />
             </Link>
           </div>
         </div>
@@ -88,11 +91,11 @@ const EmailSection = () => {
           {emailSubmitted ? (
             <div className="text-green-500 text-sm mt-2 drop-shadow-md text-center">
               <p className="text-lg font-semibold">Thank you for your message!</p>
-              <p>I&apos;ll get back to you soon.</p>
+              <p>I'll get back to you soon.</p>
             </div>
           ) : (
-            <form className="flex flex-col" onSubmit={handleSubmit}>
-              <div className="mb-6">
+            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+              <div>
                 <label
                   htmlFor="email"
                   className="text-white block mb-2 text-sm font-medium drop-shadow-md"
@@ -108,10 +111,10 @@ const EmailSection = () => {
                   placeholder="bhanuprasad.0921@gmail.com"
                 />
               </div>
-              <div className="mb-6">
+              <div>
                 <label
                   htmlFor="subject"
-                  className="text-white block text-sm mb-2 font-medium drop-shadow-md"
+                  className="text-white block mb-2 text-sm font-medium drop-shadow-md"
                 >
                   Subject
                 </label>
@@ -124,10 +127,10 @@ const EmailSection = () => {
                   placeholder="Just saying hi"
                 />
               </div>
-              <div className="mb-6">
+              <div>
                 <label
                   htmlFor="message"
-                  className="text-white block text-sm mb-2 font-medium drop-shadow-md"
+                  className="text-white block mb-2 text-sm font-medium drop-shadow-md"
                 >
                   Message
                 </label>

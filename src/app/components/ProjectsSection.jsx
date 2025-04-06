@@ -21,7 +21,7 @@ const projectsData = [
     image: "/images/projects/2.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/bhanurx100/kanban",
-    previewUrl: "https://kanban-inrmdnnns-bhanurx100s-projects.vercel.app",
+    previewUrl: "https://kanban-mu-peach.vercel.app/",
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const projectsData = [
     image: "/images/projects/3.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/bhanurx100/Bhanu-portfolio",
-    previewUrl: "/",
+    previewUrl: "https://bhanu-portfolio-nine.vercel.app/",
   },
 ];
 

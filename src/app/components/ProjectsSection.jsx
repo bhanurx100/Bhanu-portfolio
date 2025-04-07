@@ -7,8 +7,9 @@ import { motion, useInView } from "framer-motion";
 const projectsData = [
   {
     id: 1,
-    title: "SpendWise",
-    description: "A comprehensive, user-centric expense tracking platform with meticulous precision, boosting data accuracy by 25%. Visualized financial trends using Chart.js, enhancing analysis by 30%.",
+    title: "Budget Tracker",
+    description:
+      "An expense tracking platform built for precision, boosting data accuracy by 25%. Visualized financial trends with Chart.js, enhancing analysis by 30%.",
     image: "/images/projects/1.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/bhanurx100/SpendWise.git",
@@ -16,8 +17,9 @@ const projectsData = [
   },
   {
     id: 2,
-    title: "Kanban",
-    description: "A dynamic task management platform with React.js, boosting team productivity by 35%. Features intuitive UI with Tailwind CSS and secure authentication with Google OAuth 2.0 and JWT.",
+    title: "Kanban Board",
+    description:
+      "A task management board built with React.js, using dnd-kit for drag-and-drop functionality. Enhances productivity with an intuitive UI and Tailwind CSS styling.",
     image: "/images/projects/2.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/bhanurx100/kanban",
@@ -25,8 +27,9 @@ const projectsData = [
   },
   {
     id: 3,
-    title: "Portfolio ",
-    description: "A dynamic portfolio generator allowing users to customize and showcase their profiles. Features live preview and Firebase for storage and hosting, improving user experience by 30%.",
+    title: "Portfolio",
+    description:
+      "A personal portfolio site I built using Next.js and Tailwind CSS for a sleek design. Showcases my projects and skills with smooth animations and responsive layout.",
     image: "/images/projects/3.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/bhanurx100/Bhanu-portfolio",

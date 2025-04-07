@@ -72,8 +72,8 @@ const EmailSection = () => {
       >
         <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-md">
           <p className="text-[#ADB7BE] text-lg sm:text-xl lg:text-2xl mb-6 max-w-md drop-shadow-md">
-            I'm currently looking for new opportunities, my inbox is always open.
-            Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            I&apos;m currently looking for new opportunities, my inbox is always open.
+            Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
           </p>
           <div className="socials flex flex-row gap-6 mt-6">
             <Link href="https://github.com/bhanurx100" className="hover:opacity-80 transition-opacity">
@@ -94,7 +94,7 @@ const EmailSection = () => {
           {emailSubmitted ? (
             <div className="text-green-500 text-sm mt-2 drop-shadow-md text-center">
               <p className="text-lg font-semibold">Thank you for your message!</p>
-              <p>I'll get back to you soon.</p>
+              <p>I&apos;ll get back to you soon.</p>
             </div>
           ) : (
             <form className="flex flex-col gap-6 max-w-md" onSubmit={handleSubmit}>

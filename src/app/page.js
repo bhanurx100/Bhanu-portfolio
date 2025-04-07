@@ -8,10 +8,10 @@ import StarCanvas from "./components/StarCanvas";
 
 export default function Home() {
   return (
-    <main className="flex flex-col bg-transparent relative">
+    <main className="flex flex-col bg-transparent relative min-h-screen overflow-x-hidden">
       <StarCanvas />
       <Navbar />
-      <div className="container mx-auto pt-4 lg:pt-8 relative z-10">
+      <div className="container mx-auto pt-4 lg:pt-8 relative z-10 flex-1 max-w-7xl">
         <div className="py-8 lg:py-12">
           <HeroSection />
         </div>

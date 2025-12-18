@@ -87,6 +87,7 @@ const config: Config = {
           800: '#5a0c23',
           900: '#2d0612',
           950: '#1f040c',
+          
         },
         'raspberry-plum': {
           50: '#f9ecf4',

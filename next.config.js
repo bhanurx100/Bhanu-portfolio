@@ -4,6 +4,7 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     remotePatterns: [
+      
       {
         protocol: 'http',
         hostname: 'localhost',

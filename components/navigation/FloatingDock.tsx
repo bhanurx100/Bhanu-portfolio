@@ -39,9 +39,9 @@ export default function FloatingDock() {
     }
   };
 
-  const handleThemeToggle = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+  // const handleThemeToggle = () => {
+  //   setTheme(theme === 'dark' ? 'light' : 'dark');
+  // };
 
   // Don't render on server or mobile
   if (!mounted) return null;
@@ -117,7 +117,7 @@ export default function FloatingDock() {
           <div className="w-px h-8 bg-white/10 mx-1" />
 
           {/* Theme toggle */}
-          <div className="relative">
+          {/* <div className="relative">
             <motion.button
               variants={itemVariants}
               initial="idle"
@@ -140,7 +140,7 @@ export default function FloatingDock() {
                 )}
               </motion.div>
             </motion.button>
-          </div>
+          </div> */}
         </div>
       </div>
     </motion.nav>

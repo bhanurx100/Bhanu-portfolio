@@ -5,10 +5,25 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { FiMail, FiGithub, FiLinkedin, FiMapPin, FiClock, FiSend, FiCheck, FiCopy, FiTwitter } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
+
+import {
+  FiMail,
+  FiGithub,
+  FiLinkedin,
+  FiMapPin,
+  FiClock,
+  FiSend,
+  FiCheck,
+  FiCopy,
+  FiTwitter,
+} from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
+
 import { Button } from '@/components/ui/Button';
 import { RevealCard } from '@/components/ui/RevealCard';
 
+/* animations */
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -29,16 +44,17 @@ const staggerContainer = {
   },
 };
 
-// Form validation schema
+/* validation */
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  subject: z.string().min(3, 'Subject must be at least 3 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  name: z.string().min(2),
+  email: z.string().email(),
+  subject: z.string().min(3),
+  message: z.string().min(10),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+/* data */
 const contactMethods = [
   {
     icon: FiMail,
@@ -52,7 +68,6 @@ const contactMethods = [
     icon: FiMapPin,
     label: 'Location',
     value: 'Bengaluru, India',
-    action: 'View map',
     copyable: false,
     color: 'text-secondary',
   },
@@ -60,7 +75,6 @@ const contactMethods = [
     icon: FiClock,
     label: 'Response Time',
     value: 'Within 24 hours',
-    action: null,
     copyable: false,
     color: 'text-primary',
   },
@@ -92,6 +106,14 @@ const socialLinks = [
     hoverColor: 'group-hover:from-blue-400 group-hover:to-blue-600',
   },
   {
+    icon: FaWhatsapp,
+    label: 'WhatsApp',
+    username: '+91 99485 15012',
+    href: 'https://wa.me/919948515012',
+    color: 'from-green-500 to-green-600',
+    hoverColor: 'group-hover:from-green-400 group-hover:to-green-500',
+  },
+  {
     icon: FiMail,
     label: 'Email',
     username: 'bhanuprasad.0921@gmail.com',
@@ -101,9 +123,14 @@ const socialLinks = [
   },
 ];
 
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] =
+    useState<'idle' | 'success' | 'error'>('idle');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
@@ -124,21 +151,22 @@ export default function Contact() {
     setSubmitStatus('idle');
 
     try {
-      // For static export, use mailto link as fallback
-      const subject = encodeURIComponent(data.subject);
-      const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
-      const mailtoLink = `mailto:gp627853@gmail.com?subject=${subject}&body=${body}`;
-      
-      window.open(mailtoLink);
-      
-      // Form submitted successfully
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: data.name,
+          from_email: data.email,
+          subject: data.subject,
+          message: data.message,
+        },
+        PUBLIC_KEY
+      );
+
       setSubmitStatus('success');
       reset();
-
-      // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (error) {
-      // Error handling
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -146,18 +174,16 @@ export default function Contact() {
   };
 
   const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText('bhanuprasad.0921@gmail.com');
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
-    } catch (err) {
-      // Clipboard API failed - user can still see email address
-      // No need to show error as email is visible on screen
-    }
+    await navigator.clipboard.writeText('bhanuprasad.0921@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
   };
 
   return (
-    <section id="contact" className="py-20 px-6 bg-background dark:bg-gradient-to-b dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark">
+    <section
+      id="contact"
+      className="py-20 px-6 bg-background dark:bg-gradient-to-b dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
+    >
       <div className="max-w-6xl mx-auto">
         <motion.div
           variants={staggerContainer}
@@ -440,7 +466,7 @@ export default function Contact() {
                         animate={{ opacity: 1, y: 0 }}
                         className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400"
                       >
-                        <p className="text-sm">Failed to send message. Please try again or email me directly at gp627853@gmail.com</p>
+                        <p className="text-sm">Failed to send message. Please try again or email me directly at bhanuprasad.0921@gmail.com</p>
                       </motion.div>
                     )}
                   </form>

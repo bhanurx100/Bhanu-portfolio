@@ -2,10 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { FiMapPin, FiZap, FiAward, FiUsers } from 'react-icons/fi';
+import { IconType } from 'react-icons';
 
 interface Badge {
   id: string;
-  icon: React.ElementType;
+  icon: IconType;
   label: string;
   value: string;
 }
@@ -70,6 +71,7 @@ export default function TrustBadges() {
     >
       {badges.map((badge) => {
         const Icon = badge.icon;
+
         return (
           <motion.div
             key={badge.id}
@@ -79,8 +81,12 @@ export default function TrustBadges() {
           >
             <Icon className="w-4 h-4 text-primary" />
             <div className="flex items-center gap-1.5">
-              <span className="text-text-secondary text-sm">{badge.label}:</span>
-              <span className="text-text-primary text-sm font-medium">{badge.value}</span>
+              <span className="text-text-secondary text-sm">
+                {badge.label}:
+              </span>
+              <span className="text-text-primary text-sm font-medium">
+                {badge.value}
+              </span>
             </div>
           </motion.div>
         );

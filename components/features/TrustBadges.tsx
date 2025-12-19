@@ -1,13 +1,19 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import type { FC } from 'react';
 import { FiMapPin, FiZap, FiAward, FiUsers } from 'react-icons/fi';
 
-// 1. THE FIX: Define exactly what props the Icon accepts
+/**
+ * IMPORTANT:
+ * react-icons components accept `className`
+ * so we must type icon strictly as a React component with className
+ */
+type IconType = FC<{ className?: string }>;
+
 interface Badge {
   id: string;
-  // This line tells TypeScript: "The icon is a component that definitely accepts a className string"
-  icon: React.ComponentType<{ className?: string }>; 
+  icon: IconType;
   label: string;
   value: string;
 }
@@ -23,7 +29,7 @@ const badges: Badge[] = [
     id: 'response',
     icon: FiZap,
     label: 'Response',
-    value: '< 48hrs',
+    value: '< 48 hrs',
   },
   {
     id: 'projects',
@@ -72,6 +78,7 @@ export default function TrustBadges() {
     >
       {badges.map((badge) => {
         const Icon = badge.icon;
+
         return (
           <motion.div
             key={badge.id}
@@ -79,9 +86,10 @@ export default function TrustBadges() {
             whileHover={{ scale: 1.05, y: -2 }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors duration-300"
           >
-            {/* 2. THE FIX: TypeScript now knows this is allowed */}
+            {/* Icon */}
             <Icon className="w-4 h-4 text-primary" />
-            
+
+            {/* Text */}
             <div className="flex items-center gap-1.5">
               <span className="text-text-secondary text-sm">
                 {badge.label}:

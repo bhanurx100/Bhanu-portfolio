@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from 'next-themes';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import MobileNav from '@/components/navigation/MobileNav';
@@ -54,7 +53,6 @@ export const metadata: Metadata = {
 
   authors: [{ name: 'Bhanuprasad L' }],
 
-  /* ✅ FAVICON */
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -85,10 +83,7 @@ export function generateViewport() {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
-    themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-      { media: '(prefers-color-scheme: dark)', color: '#0d1117' },
-    ],
+    themeColor: '#0d1117',
   };
 }
 
@@ -99,28 +94,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}
       >
-        {/* Accessibility: Skip link */}
+        {/* Accessibility skip link */}
         <a
           href="#home"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg"
         >
           Skip to main content
         </a>
 
         <ErrorBoundary>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <MobileNav />
-            <SmoothScrollProvider>
-              {/* Background animation */}
-              <StarCanvas />
-
-              {children}
-            </SmoothScrollProvider>
-          </ThemeProvider>
+          <MobileNav />
+          <SmoothScrollProvider>
+            <StarCanvas />
+            {children}
+          </SmoothScrollProvider>
         </ErrorBoundary>
       </body>
     </html>

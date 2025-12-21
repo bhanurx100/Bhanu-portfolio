@@ -12,9 +12,11 @@ import { FiMapPin, FiZap, FiAward, FiUsers } from 'react-icons/fi';
 //type IconType = FC<{ className?: string }>;
 import type { ComponentType, SVGProps } from 'react';
 
+// Update the Badge interface to be more flexible with icon types
+// Update the Badge interface to be more flexible with icon types
 interface Badge {
   id: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  icon: ComponentType<{ className?: string }>; // More permissive type
   label: string;
   value: string;
 }

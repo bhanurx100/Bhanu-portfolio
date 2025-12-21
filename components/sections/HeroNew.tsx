@@ -50,14 +50,15 @@ export default function HeroNew() {
               <TypeAnimation
                 sequence={[
                   'Bhanuprasad L',
-                  2200,
-                  'Frontend Engineer',
                   1200,
-                  
+                  'Frontend Engineer',
+                  200,
+                  'Bhanuprasad L',
+                  1200,
                 ]}
                 wrapper="span"
                 speed={50}
-                repeat={Infinity}
+                repeat={0}
                 className="block text-blue-500 mt-2"
               />
             </h1>

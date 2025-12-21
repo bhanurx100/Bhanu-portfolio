@@ -9,14 +9,16 @@ import { FiMapPin, FiZap, FiAward, FiUsers } from 'react-icons/fi';
  * react-icons components accept `className`
  * so we must type icon strictly as a React component with className
  */
-type IconType = FC<{ className?: string }>;
+//type IconType = FC<{ className?: string }>;
+import type { ComponentType, SVGProps } from 'react';
 
 interface Badge {
   id: string;
-  icon: IconType;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   label: string;
   value: string;
 }
+
 
 const badges: Badge[] = [
   {

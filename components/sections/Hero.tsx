@@ -82,7 +82,7 @@ export default function Hero() {
               Hi, I'm{' '}
             </span>
             <span className="gradient-text">
-              Gaurav Patel
+              Bhanuprasad L
             </span>
             <br />
             <span className="text-text-primary">

@@ -52,13 +52,11 @@ export default function HeroNew() {
                   'Bhanuprasad L',
                   1200,
                   'Frontend Engineer',
-                  200,
-                  'Bhanuprasad L',
-                  1200,
+                  500,            
                 ]}
                 wrapper="span"
                 speed={50}
-                repeat={0}
+                repeat={Infinity}
                 className="block text-blue-500 mt-2"
               />
             </h1>

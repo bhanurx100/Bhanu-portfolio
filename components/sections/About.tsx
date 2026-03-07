@@ -68,9 +68,9 @@ const stats = [
 /* ===================== EXPERIENCE ===================== */
 const experiences = [
   {
-    company: 'Microline Information Systems Pvt Ltd',
+    company: 'Freelancer',
     role: 'Frontend Developer',
-    period: 'July 2023 - Present',
+    period: 'Sept 2023 - Present',
     location: 'Remote, India',
     description:
       'Developing and maintaining frontend features for internal and client-facing web applications using React.',

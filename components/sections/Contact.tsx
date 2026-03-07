@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import emailjs from '@emailjs/browser';
+
 
 import {
   FiMail,
@@ -123,9 +123,7 @@ const socialLinks = [
   },
 ];
 
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -147,31 +145,37 @@ export default function Contact() {
   const formValues = watch();
 
   const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
+  setIsSubmitting(true);
+  setSubmitStatus("idle");
 
-    try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: data.name,
-          from_email: data.email,
-          subject: data.subject,
-          message: data.message,
-        },
-        PUBLIC_KEY
-      );
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      }),
+    });
 
-      setSubmitStatus('success');
+    if (res.ok) {
+      setSubmitStatus("success");
       reset();
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setSubmitStatus("error");
     }
-  };
+  } catch (error) {
+    console.error("Contact form error:", error);
+    setSubmitStatus("error");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText('bhanuprasad.0921@gmail.com');

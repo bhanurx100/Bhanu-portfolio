@@ -13,11 +13,7 @@ export interface Project {
   image: string;
   video?: string;
   tech: string[];
-  metrics?: {
-    users?: string;
-    performance?: string;
-    uptime?: string;
-  };
+  metrics?: Record<string, string>;
   links: {
     github?: string;
     live?: string;

@@ -1,24 +1,45 @@
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+/* ========= GSAP LAZY LOADER (PERF OPTIMIZED) ========= */
 
-// Register GSAP plugins
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+type GSAPType = typeof import("gsap").default;
+type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
 
-// Custom easing functions
+let gsapInstance: GSAPType | null = null;
+let scrollTriggerInstance: ScrollTriggerType | null = null;
+
+export const loadGSAP = async () => {
+  if (typeof window === "undefined") return null;
+
+  if (!gsapInstance) {
+    const gsapModule = await import("gsap");
+    const scrollModule = await import("gsap/ScrollTrigger");
+
+    gsapInstance = gsapModule.default;
+    scrollTriggerInstance = scrollModule.ScrollTrigger;
+
+    gsapInstance.registerPlugin(scrollTriggerInstance);
+  }
+
+  return {
+    gsap: gsapInstance,
+    ScrollTrigger: scrollTriggerInstance,
+  };
+};
+
+/* ========= EASINGS ========= */
+
 export const easings = {
-  power1: 'power1.out',
-  power2: 'power2.out',
-  power3: 'power3.out',
-  power4: 'power4.out',
-  elastic: 'elastic.out(1, 0.3)',
-  back: 'back.out(1.7)',
-  expo: 'expo.out',
-  circ: 'circ.out',
+  power1: "power1.out",
+  power2: "power2.out",
+  power3: "power3.out",
+  power4: "power4.out",
+  elastic: "elastic.out(1, 0.3)",
+  back: "back.out(1.7)",
+  expo: "expo.out",
+  circ: "circ.out",
 } as const;
 
-// Animation durations
+/* ========= DURATIONS ========= */
+
 export const durations = {
   fast: 0.2,
   normal: 0.3,
@@ -27,20 +48,23 @@ export const durations = {
   verySlow: 1.2,
 } as const;
 
-// Default GSAP settings
+/* ========= DEFAULT CONFIG ========= */
+
 export const defaultGSAPConfig = {
   force3D: true,
-  transformOrigin: 'center center',
+  transformOrigin: "center center",
 } as const;
 
-// Scroll trigger defaults
+/* ========= SCROLL TRIGGER DEFAULTS ========= */
+
 export const scrollTriggerDefaults = {
-  start: 'top 80%',
-  end: 'bottom 20%',
-  toggleActions: 'play none none reverse',
+  start: "top 80%",
+  end: "bottom 20%",
+  toggleActions: "play none none reverse",
 } as const;
 
-// Animation variants for common patterns
+/* ========= ANIMATION VARIANTS ========= */
+
 export const fadeInUp = {
   from: { opacity: 0, y: 50 },
   to: { opacity: 1, y: 0, duration: durations.medium, ease: easings.power3 },
@@ -71,7 +95,8 @@ export const slideInRight = {
   to: { x: 0, opacity: 1, duration: durations.medium, ease: easings.power3 },
 };
 
-// Stagger configuration
+/* ========= STAGGER ========= */
+
 export const staggerConfig = {
   fast: 0.05,
   normal: 0.1,
@@ -79,49 +104,67 @@ export const staggerConfig = {
   verySlow: 0.2,
 } as const;
 
-// Helper function to create scroll-triggered animation
-export const createScrollTrigger = (
-  element: gsap.TweenTarget,
+/* ========= SAFE HELPERS ========= */
+
+const ensureGSAP = async () => {
+  const lib = await loadGSAP();
+  if (!lib) throw new Error("GSAP not available on server");
+  return lib;
+};
+
+/* ========= SCROLL TRIGGER HELPERS ========= */
+
+export const createScrollTrigger = async (
+  element: Element | string,
   animation: gsap.TweenVars,
-  options?: ScrollTrigger.Vars
+  options?: Partial<gsap.ScrollTriggerVars>,
 ) => {
+  const { gsap } = await ensureGSAP();
+
   return gsap.to(element, {
     ...animation,
     scrollTrigger: {
-      trigger: element as any,
+      trigger: element,
       ...scrollTriggerDefaults,
       ...options,
     },
   });
 };
 
-// Helper to batch scroll animations
-export const batchScrollTrigger = (
+export const batchScrollTrigger = async (
   elements: string,
-  animation: gsap.TweenVars,
-  options?: any
+  animation: Record<string, any>,
+  options?: Record<string, any>,
 ) => {
+  const { gsap, ScrollTrigger } = await ensureGSAP();
+
   const { stagger = staggerConfig.normal, ...scrollOptions } = options || {};
 
   return ScrollTrigger.batch(elements, {
     ...scrollTriggerDefaults,
     ...scrollOptions,
-    onEnter: (batch: any) =>
+    onEnter: (batch: Element[]) =>
       gsap.to(batch, {
         ...animation,
         stagger,
       }),
-  } as any);
+  });
 };
 
-// Helper to kill all scroll triggers
-export const killAllScrollTriggers = () => {
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+/* ========= UTIL FUNCTIONS ========= */
+
+export const killAllScrollTriggers = async () => {
+  const { ScrollTrigger } = await ensureGSAP();
+  ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
 };
 
-// Helper to refresh scroll triggers
-export const refreshScrollTriggers = () => {
+export const refreshScrollTriggers = async () => {
+  const { ScrollTrigger } = await ensureGSAP();
   ScrollTrigger.refresh();
 };
 
-export { gsap, ScrollTrigger };
+/* ========= PUBLIC ACCESS ========= */
+
+export const getGSAP = async () => {
+  return await ensureGSAP();
+};

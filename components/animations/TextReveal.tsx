@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/animations/gsap-config';
-import { useReducedMotion } from '@/hooks/animations/useReducedMotion';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef } from "react";
+import { getGSAP, ScrollTrigger, gsap } from "@/lib/animations/gsap-config";
+import { useReducedMotion } from "@/hooks/animations/useReducedMotion";
+import { cn } from "@/lib/utils";
 
 interface TextRevealProps {
   children: string;
@@ -33,7 +33,7 @@ export function TextReveal({
   useEffect(() => {
     if (!textRef.current || prefersReducedMotion) return;
 
-    const words = textRef.current.querySelectorAll('.word');
+    const words = textRef.current.querySelectorAll(".word");
 
     if (triggerOnScroll) {
       // Animate on scroll
@@ -49,14 +49,14 @@ export function TextReveal({
           duration,
           stagger,
           delay,
-          ease: 'power3.out',
+          ease: "power3.out",
           scrollTrigger: {
             trigger: textRef.current,
-            start: 'top 80%',
-            end: 'bottom 20%',
-            toggleActions: 'play none none reverse',
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     } else {
       // Animate immediately on mount
@@ -72,13 +72,13 @@ export function TextReveal({
           duration,
           stagger,
           delay,
-          ease: 'power3.out',
-        }
+          ease: "power3.out",
+        },
       );
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
+      ScrollTrigger!.getAll().forEach((trigger) => {
         if (trigger.trigger === textRef.current) {
           trigger.kill();
         }
@@ -87,10 +87,10 @@ export function TextReveal({
   }, [stagger, duration, delay, triggerOnScroll, prefersReducedMotion]);
 
   // Split text into words
-  const words = children.split(' ');
+  const words = children.split(" ");
 
   return (
-    <div ref={textRef} className={cn('overflow-hidden', className)}>
+    <div ref={textRef} className={cn("overflow-hidden", className)}>
       {words.map((word, index) => (
         <span key={index} className="word inline-block mr-2 opacity-0">
           {word}

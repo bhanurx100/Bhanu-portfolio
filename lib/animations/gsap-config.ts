@@ -1,27 +1,27 @@
 /* ========= GSAP LAZY LOADER (PERF OPTIMIZED) ========= */
 
-type GSAPType = typeof import("gsap").default;
-type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
+import type { gsap } from "gsap";
+import type { ScrollTrigger } from "gsap/ScrollTrigger";
 
-let gsapInstance: GSAPType | null = null;
-let scrollTriggerInstance: ScrollTriggerType | null = null;
+let _gsapInstance: typeof gsap | null = null;
+let _scrollTriggerInstance: typeof ScrollTrigger | null = null;
 
 export const loadGSAP = async () => {
   if (typeof window === "undefined") return null;
 
-  if (!gsapInstance) {
+  if (!_gsapInstance) {
     const gsapModule = await import("gsap");
     const scrollModule = await import("gsap/ScrollTrigger");
 
-    gsapInstance = gsapModule.default;
-    scrollTriggerInstance = scrollModule.ScrollTrigger;
+    _gsapInstance = gsapModule.default;
+    _scrollTriggerInstance = scrollModule.ScrollTrigger;
 
-    gsapInstance.registerPlugin(scrollTriggerInstance);
+    _gsapInstance.registerPlugin(_scrollTriggerInstance);
   }
 
   return {
-    gsap: gsapInstance,
-    ScrollTrigger: scrollTriggerInstance,
+    gsap: _gsapInstance!,
+    ScrollTrigger: _scrollTriggerInstance!,
   };
 };
 
@@ -48,19 +48,26 @@ export const durations = {
   verySlow: 1.2,
 } as const;
 
-/* ========= DEFAULT CONFIG ========= */
+/* ========= DEFAULT CONFIGS ========= */
 
 export const defaultGSAPConfig = {
   force3D: true,
   transformOrigin: "center center",
 } as const;
 
-/* ========= SCROLL TRIGGER DEFAULTS ========= */
-
 export const scrollTriggerDefaults = {
   start: "top 80%",
   end: "bottom 20%",
   toggleActions: "play none none reverse",
+} as const;
+
+/* ========= STAGGER ========= */
+
+export const staggerConfig = {
+  fast: 0.05,
+  normal: 0.1,
+  slow: 0.15,
+  verySlow: 0.2,
 } as const;
 
 /* ========= ANIMATION VARIANTS ========= */
@@ -95,15 +102,6 @@ export const slideInRight = {
   to: { x: 0, opacity: 1, duration: durations.medium, ease: easings.power3 },
 };
 
-/* ========= STAGGER ========= */
-
-export const staggerConfig = {
-  fast: 0.05,
-  normal: 0.1,
-  slow: 0.15,
-  verySlow: 0.2,
-} as const;
-
 /* ========= SAFE HELPERS ========= */
 
 const ensureGSAP = async () => {
@@ -116,12 +114,13 @@ const ensureGSAP = async () => {
 
 export const createScrollTrigger = async (
   element: Element | string,
-  animation: gsap.TweenVars,
-  options?: Partial<gsap.ScrollTriggerVars>,
+  animation: Record<string, unknown>,
+  options: Record<string, unknown> = {},
 ) => {
   const { gsap } = await ensureGSAP();
 
   return gsap.to(element, {
+    ...defaultGSAPConfig,
     ...animation,
     scrollTrigger: {
       trigger: element,
@@ -133,20 +132,21 @@ export const createScrollTrigger = async (
 
 export const batchScrollTrigger = async (
   elements: string,
-  animation: Record<string, any>,
-  options?: Record<string, any>,
+  animation: Record<string, unknown>,
+  options: Record<string, unknown> = {},
 ) => {
   const { gsap, ScrollTrigger } = await ensureGSAP();
 
-  const { stagger = staggerConfig.normal, ...scrollOptions } = options || {};
+  const { stagger = staggerConfig.normal, ...scrollOptions } = options;
 
-  return ScrollTrigger.batch(elements, {
+  ScrollTrigger!.batch(elements, {
     ...scrollTriggerDefaults,
     ...scrollOptions,
     onEnter: (batch: Element[]) =>
       gsap.to(batch, {
+        ...defaultGSAPConfig,
         ...animation,
-        stagger,
+        stagger: stagger as number,
       }),
   });
 };
@@ -155,16 +155,17 @@ export const batchScrollTrigger = async (
 
 export const killAllScrollTriggers = async () => {
   const { ScrollTrigger } = await ensureGSAP();
-  ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
+  ScrollTrigger!.getAll().forEach((trigger) => trigger.kill());
 };
 
 export const refreshScrollTriggers = async () => {
   const { ScrollTrigger } = await ensureGSAP();
-  ScrollTrigger.refresh();
+  ScrollTrigger!.refresh();
 };
 
-/* ========= PUBLIC ACCESS ========= */
+/* ========= PUBLIC ACCESS - FOR DIRECT IMPORT ========= */
 
-export const getGSAP = async () => {
-  return await ensureGSAP();
-};
+export const getGSAP = async () => await ensureGSAP();
+
+export { gsap } from "gsap";
+export { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -14,7 +14,7 @@ const SkillsCloud = dynamic(
 export default function HeroNew() {
   const downloadResume = () => {
     window.open(
-      'https://drive.google.com/file/d/1u7Gv0iC6zhEn4moXJUWWbBq7yXRNUBFQ/view?usp=sharing',
+      'https://drive.google.com/file/d/1DJz9HNF1fI8ex3u0tLIsRo9Fd2qChCpq/view?usp=sharing',
       '_blank'
     );
   };

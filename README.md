@@ -2,8 +2,8 @@
 
 A modern, performant developer portfolio built with **Next.js 14 App Router**, showcasing advanced animations, 3D interactions, and production-grade architecture. Live Demo: [bhanu-portfolio-nine.vercel.app](https://bhanu-portfolio-nine.vercel.app/)
 
-![Hero Screenshot](/public/images/3.png)
-![Projects Screenshot](/public/images/1.png)
+![Hero Screenshot](/public/images/portfolio.png)
+![Projects Screenshot](/public/images/projects.png)
 
 ## ✨ Features
 

@@ -7,7 +7,7 @@ export const projects: Project[] = [
     tagline: "Inventory Management SaaS Dashboard",
     description:
       "Engineered a scalable SaaS inventory management dashboard that empowers businesses to monitor stock in real-time, automate reordering, and gain actionable insights via interactive charts. Achieved 3x faster query performance with optimized MongoDB indexing and virtualized tables for 10k+ item catalogs.",
-    image: "/images/6.png",
+    image: "/images/stockpilot.png",
     tech: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS"],
     metrics: {
       performance: "3x faster queries",
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     tagline: "Hotel Booking Platform",
     description:
       "Launched a robust hotel booking platform with intelligent search, real-time availability checks, and secure reservation flows. Integrated geolocation filtering and payment gateways, delivering 95% booking completion rates through intuitive UI/UX design.",
-    image: "/images/5.png",
+    image: "/images/stayease.png",
     tech: ["React.js", "Node.js", "Express", "MongoDB"],
     metrics: {
       performance: "95% booking completion",
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     tagline: "Expense Sharing Platform",
     description:
       "Created SpendWise, a real-time expense splitter for groups with instant balance calculations, receipt OCR, and dynamic Chart.js visualizations. Firebase sync supports unlimited splits, saving users hours on settlements.",
-    image: "/images/1.png",
+    image: "/images/spendwise.png",
     tech: ["React.js", "JavaScript", "Chart.js", "Firebase"],
     metrics: {
       users: "Real-time group splits",
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     tagline: "Developer Portfolio Website",
     description:
       "Architected this cutting-edge portfolio featuring 3D hover effects, infinite scroll animations, and AI-powered command palette. Scored 98+ Lighthouse with Next.js App Router and full accessibility compliance.",
-    image: "/images/3.png",
+    image: "/images/portfolio.png",
     tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
     metrics: {
       performance: "98+ Lighthouse",

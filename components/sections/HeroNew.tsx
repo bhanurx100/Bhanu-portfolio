@@ -14,7 +14,7 @@ const SkillsCloud = dynamic(
 export default function HeroNew() {
   const downloadResume = () => {
     window.open(
-      'https://drive.google.com/file/d/1DJz9HNF1fI8ex3u0tLIsRo9Fd2qChCpq/view?usp=sharing',
+      'https://drive.google.com/file/d/1yiYj0ztQUDDegX-8qnq2xy4kbh1I8oF-/view?usp=sharing',
       '_blank'
     );
   };
@@ -51,7 +51,7 @@ export default function HeroNew() {
                 sequence={[
                   'Bhanuprasad L',
                   1200,
-                  'Frontend Engineer',
+                  'Software Engineer',
                   500,            
                 ]}
                 wrapper="span"

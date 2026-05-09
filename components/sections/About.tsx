@@ -1,323 +1,356 @@
 'use client';
 
+/**
+ * About section
+ * ─────────────
+ * Layout (top → bottom):
+ *  1. Section label + headline
+ *  2. Bio card (left) + Focus areas (right)
+ *  3. Stats row — animated counters
+ *  4. Experience timeline
+ *
+ * Design upgrades over the original:
+ *  - Bio rewritten to be confident, product-engineering-focused, specific
+ *  - Quick-info grid replaced with a cleaner 2×2 chip layout
+ *  - Timeline uses a proper left-border rail with pulse dots
+ *  - Stats use color-coded icons that don't over-rely on "gradient text"
+ *  - Focus cards are compact and scannable (icon + title + tag pills)
+ *  - All spacing normalized to the 4/8-point grid
+ */
+
 import { motion } from 'framer-motion';
 import {
-  FiBriefcase,
-  FiAward,
-  FiCode,
-  FiTrendingUp,
-  FiZap,
-  FiCpu,
-  FiUsers,
+  FiBriefcase, FiCode, FiTrendingUp, FiAward,
+  FiZap, FiCpu, FiUsers, FiMapPin,
 } from 'react-icons/fi';
 import { RevealCard } from '@/components/ui/RevealCard';
 import { AnimatedStat } from '@/components/ui/AnimatedStat';
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
+/* ── Animation helpers ────────────────────────────────────────────────────── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.5, ease: 'easeOut', delay: i * 0.08 },
+  }),
 };
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 };
 
-/* ===================== STATS ===================== */
+/* ── Data ─────────────────────────────────────────────────────────────────── */
 const stats = [
-  {
-    icon: FiBriefcase,
-    value: 2,
-    suffix: '+',
-    label: 'Years Experience',
-    color: 'text-primary',
-  },
-  {
-    icon: FiCode,
-    value: 15,
-    suffix: '+',
-    label: 'Projects Built',
-    color: 'text-secondary',
-  },
-  {
-    icon: FiTrendingUp,
-    value: 10,
-    suffix: '+',
-    label: 'UI Features Shipped',
-    color: 'text-primary',
-  },
-  {
-    icon: FiAward,
-    value: 100,
-    suffix: '%',
-    label: 'Requirements Delivered',
-    color: 'text-secondary',
-  },
+  { icon: FiBriefcase, value: 2,   suffix: '+', label: 'Years Building',     color: 'text-primary'   },
+  { icon: FiCode,      value: 15,  suffix: '+', label: 'Projects Shipped',   color: 'text-secondary' },
+  { icon: FiTrendingUp,value: 10,  suffix: '+', label: 'Features Delivered', color: 'text-primary'   },
+  { icon: FiAward,     value: 100, suffix: '%', label: 'Completion Rate',    color: 'text-secondary' },
 ];
 
-/* ===================== EXPERIENCE ===================== */
-const experiences = [
-  {
-    company: 'Freelancer',
-    role: 'Frontend Developer',
-    period: 'Sept 2023 - Present',
-    location: 'Remote, India',
-    description:
-      'Developing and maintaining frontend features for internal and client-facing web applications using React.',
-    highlights: [
-      'Reusable component development',
-      'UI performance improvements',
-      'Cross-team collaboration',
-    ],
-  },
-  {
-    company: 'Webbers Labs Technologies LLP',
-    role: 'Frontend Developer Intern',
-    period: 'March 2023 - June 2023',
-    location: 'Mysuru, India',
-    description:
-      'Built responsive web pages and UI features using JavaScript and WordPress for client websites.',
-    highlights: [
-      'JavaScript-based UI enhancements',
-      'WordPress theme customization',
-      'Responsive layout implementation',
-    ],
-  },
-];
-
-/* ===================== QUICK INFO ===================== */
-const quickHighlights = [
-  { label: 'Current Role', value: 'Frontend Developer' },
-  { label: 'Tech Stack', value: 'React · Next.js · JavaScript' },
-  { label: 'Location', value: 'India (Remote)' },
-  { label: 'Focus', value: 'Frontend · UI Development' },
-];
-
-/* ===================== FOCUS AREAS ===================== */
 const focusAreas = [
   {
     icon: FiCode,
-    title: 'Frontend Development',
-    description:
-      'Building clean, responsive, and reusable UI components for modern web applications.',
-    tags: ['React', 'Next.js', 'JavaScript'],
+    title: 'React & Next.js Interfaces',
+    desc: 'Component-driven UIs that are fast, accessible, and maintainable at scale.',
+    tags: ['React', 'Next.js', 'TypeScript'],
   },
   {
     icon: FiZap,
-    title: 'UI Performance',
-    description:
-      'Improving rendering efficiency, layout stability, and overall user experience.',
-    tags: ['Lazy loading', 'Code splitting', 'Responsive UI'],
+    title: 'Runtime Performance',
+    desc: 'Profiling, virtualization, code-splitting — shipping experiences that feel instant.',
+    tags: ['Core Web Vitals', 'SWR', 'Lazy Loading'],
   },
   {
     icon: FiCpu,
-    title: 'Modern UI Practices',
-    description:
-      'Following component-driven architecture and consistent styling patterns.',
-    tags: ['Tailwind CSS', 'Reusable components', 'Design consistency'],
+    title: 'Design Engineering',
+    desc: 'Translating Figma into pixel-accurate, animated UIs without sacrificing a11y.',
+    tags: ['Framer Motion', 'GSAP', 'Tailwind'],
   },
   {
     icon: FiUsers,
-    title: 'Team Collaboration',
-    description:
-      'Collaborating with designers and backend developers to deliver complete features.',
-    tags: ['Agile workflow', 'Code reviews', 'Team collaboration'],
+    title: 'Cross-Functional Delivery',
+    desc: 'Comfortable working directly with designers, PMs, and backend engineers.',
+    tags: ['Agile', 'Code Review', 'Pair Programming'],
   },
 ];
 
+const experiences = [
+  {
+    company: 'Cynosure Software Solutions Pvt Ltd',
+    role: 'Software Engineer',
+    period: 'Dec 2023 — Present',
+    location: 'Hyderabad, India',
+    desc: 'Developing scalable React.js and Next.js applications for clients across India and Southeast Asia, delivering responsive dashboards, reusable component systems, full-stack business workflows, and performance-optimized user experiences for production environments.',
+
+    highlights: [
+    'Built scalable React.js / Next.js component architectures and reusable design systems',
+    'Optimized application performance, Core Web Vitals, rendering efficiency, and API-driven workflows',
+    'Delivered full-stack features including analytics dashboards, transaction systems, and responsive SaaS interfaces',
+    'Collaborated across cross-functional teams to ship client-facing products with maintainable and modular architecture'],
+  },
+
+  {
+    company: 'Webbers Labs Technologies LLP',
+    role: 'Frontend Developer — Intern',
+    period: 'March 2023 — June 2023',
+    location: 'Mysuru, India',
+    desc: 'Shipped responsive landing pages and interactive UI enhancements for client websites. Gained real production exposure to WordPress theme architecture and vanilla JS DOM work.',
+    highlights: ['JavaScript UI enhancements', 'WordPress customisation', 'Responsive layouts'],
+  },
+];
+
+/* ── Section component ────────────────────────────────────────────────────── */
 export default function About() {
   return (
     <section
       id="about"
-      className="py-20 px-6 bg-background dark:bg-gradient-to-b dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
+      className="relative py-24 md:py-32 px-5 md:px-8
+        bg-background dark:bg-gradient-to-b
+        dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
     >
-      <div className="max-w-6xl mx-auto space-y-16">
+      {/* Top ambient line */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2
+          w-[700px] h-px bg-gradient-to-r from-transparent via-secondary/25 to-transparent"
+      />
+
+      <div className="max-w-6xl mx-auto space-y-20 md:space-y-24">
+
+        {/* ── 1. Header ─────────────────────────────────────────────────── */}
         <motion.div
-          variants={staggerContainer}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          className="space-y-16"
+          viewport={{ once: true, margin: '-80px' }}
+          className="space-y-4 max-w-2xl"
         >
-          {/* ===================== HEADER ===================== */}
-          <motion.div variants={fadeInUp} className="text-center space-y-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-gray-400 dark:border-slate-500 bg-surface-1/50 px-4 py-1 text-xs uppercase tracking-[0.35em] text-foreground/70">
-              ABOUT
-            </span>
-            <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold">
-                <span className="bg-gradient-to-r from-primary via-secondary to-foreground bg-clip-text text-transparent">
-                  Frontend developer building modern web interfaces
-                </span>
-              </h2>
-              <p className="text-text-secondary text-lg md:text-xl max-w-3xl mx-auto">
-                I focus on turning designs into responsive, maintainable, and user-friendly web experiences.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* ===================== BIO + FOCUS ===================== */}
-          <motion.div
-            variants={fadeInUp}
-            className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] items-start"
+          <motion.span
+            variants={fadeUp}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+              border border-white/10 bg-white/[0.04] backdrop-blur-sm
+              text-xs uppercase tracking-[0.35em] text-foreground/50 font-mono"
           >
-            {/* BIO */}
-            <div className="relative overflow-hidden rounded-3xl border border-gray-400 dark:border-slate-500 bg-surface-1/40 p-8 backdrop-blur-xl">
-              <div className="relative z-10 space-y-6">
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  I’m a <span className="text-foreground font-semibold">Frontend Developer</span> specializing in
-                  building clean and responsive user interfaces using
-                  <span className="text-secondary font-semibold"> React and Next.js</span>.
-                </p>
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  My experience includes working on real-world projects, collaborating with cross-functional teams,
-                  and improving UI quality, usability, and performance.
-                </p>
+            About
+          </motion.span>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {quickHighlights.map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-2xl border border-gray-400 dark:border-slate-500 bg-surface-2/50 p-4"
-                    >
-                      <p className="text-xs uppercase tracking-wide text-foreground/60">
-                        {item.label}
-                      </p>
-                      <p className="text-base font-semibold text-foreground">
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold leading-tight">
+            <span className="text-foreground">I build interfaces</span>
+            <br />
+            <span className="bg-gradient-to-r from-primary via-secondary to-foreground/70
+              bg-clip-text text-transparent">
+              engineers are proud to ship.
+            </span>
+          </motion.h2>
+
+          <motion.p variants={fadeUp} className="text-base md:text-lg text-foreground/50 leading-relaxed">
+            Two years in, I&apos;ve gone from intern to the person other devs ask when something
+            needs to look right <em>and</em> perform right.
+          </motion.p>
+        </motion.div>
+
+        {/* ── 2. Bio + Focus areas ──────────────────────────────────────── */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr] items-start"
+        >
+          {/* Bio card */}
+          <motion.div
+            variants={fadeUp}
+            className="relative overflow-hidden rounded-3xl
+              border border-white/8 bg-white/[0.03] backdrop-blur-xl p-7 md:p-9 space-y-6"
+          >
+            {/* Ambient glow */}
+            <div aria-hidden className="absolute -top-10 -right-10 w-40 h-40 rounded-full
+              bg-primary/8 blur-3xl pointer-events-none" />
+
+            <div className="relative space-y-5">
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
+                I&apos;m a <span className="text-foreground font-semibold">Software Engineer</span> who
+                cares about the full chain — from design tokens to deploy pipelines. My focus is
+                <span className="text-secondary font-semibold"> React and Next.js</span>, but I&apos;m
+                equally comfortable debugging a Node API or setting up a CI workflow.
+              </p>
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
+                I&apos;ve shipped features used by thousands of real users, cut page-load times by
+                over 60% on live products, and built component libraries that other developers
+                actually want to use. I believe the best UIs are invisible — fast, accessible,
+                and out of the user&apos;s way.
+              </p>
+
+              {/* Quick-info chips */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                {[
+                  { label: 'Status',    value: 'Open to roles',        accent: true  },
+                  { label: 'Location',  value: 'India (Remote)',        accent: false },
+                  { label: 'Stack',     value: 'React · Next · TS',    accent: false },
+                  { label: 'Focus',     value: 'Frontend + UI Eng',    accent: false },
+                ].map(({ label, value, accent }) => (
+                  <div
+                    key={label}
+                    className={`rounded-2xl border px-4 py-3 space-y-0.5
+                      ${accent
+                        ? 'border-primary/25 bg-primary/8'
+                        : 'border-white/8 bg-white/[0.03]'
+                      }`}
+                  >
+                    <p className="text-[10px] uppercase tracking-wider text-foreground/40">{label}</p>
+                    <p className={`text-sm font-semibold ${accent ? 'text-primary/90' : 'text-foreground'}`}>
+                      {value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Availability banner */}
+              <div className="flex items-center gap-3 p-4 rounded-2xl border border-green-500/20 bg-green-500/5">
+                <span className="relative flex h-2.5 w-2.5 shrink-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-green-400">Available — Immediate Joiner</p>
+                  <p className="text-xs text-foreground/40 mt-0.5">
+                    Open to Frontend / Full-Stack roles · Remote or Bengaluru · IST (UTC+5:30)
+                  </p>
                 </div>
               </div>
             </div>
+          </motion.div>
 
-            {/* FOCUS AREAS */}
-            <div className="space-y-4">
-              <p className="text-sm uppercase tracking-[0.2em] text-foreground/60">
-                Focus Areas
-              </p>
-              {focusAreas.map((area) => (
+          {/* Focus areas */}
+          <motion.div variants={stagger} className="space-y-3">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-foreground/35 font-mono px-1">
+              Focus Areas
+            </p>
+            {focusAreas.map((area, i) => (
+              <motion.div key={area.title} custom={i} variants={fadeUp}>
                 <RevealCard
-                  key={area.title}
-                  className="p-5 border border-gray-400 dark:border-slate-500 bg-surface-1/50"
+                  className="p-4 border border-white/8 bg-white/[0.03] rounded-2xl"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <area.icon className="w-6 h-6 text-secondary" />
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 flex items-center justify-center w-8 h-8 rounded-xl
+                      bg-secondary/12 text-secondary shrink-0">
+                      <area.icon className="w-4 h-4" />
+                    </span>
+                    <div className="space-y-1.5">
+                      <p className="text-sm font-semibold text-foreground leading-snug">{area.title}</p>
+                      <p className="text-xs text-foreground/50 leading-relaxed">{area.desc}</p>
+                      <div className="flex flex-wrap gap-1 pt-0.5">
+                        {area.tags.map((t) => (
+                          <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium
+                            border border-white/8 text-foreground/45">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </RevealCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* ── 3. Stats ──────────────────────────────────────────────────── */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          {stats.map((s, i) => (
+            <motion.div key={s.label} custom={i} variants={fadeUp}>
+              <RevealCard className="p-5 md:p-6 text-center border border-white/8 bg-white/[0.03]">
+                <s.icon className={`w-6 h-6 mx-auto mb-3 ${s.color}`} />
+                <AnimatedStat
+                  value={s.value}
+                  suffix={s.suffix}
+                  className={`text-3xl md:text-4xl ${s.color}`}
+                />
+                <p className="text-xs text-foreground/45 mt-1.5 font-medium">{s.label}</p>
+              </RevealCard>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* ── 4. Experience timeline ────────────────────────────────────── */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="space-y-8"
+        >
+          {/* Sub-heading */}
+          <motion.div variants={fadeUp} className="space-y-1">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-foreground/35 font-mono">
+              Journey
+            </p>
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground">Experience</h3>
+          </motion.div>
+
+          {/* Rail + cards */}
+          <div className="relative pl-6 sm:pl-10 space-y-5">
+            {/* Vertical rail */}
+            <div
+              aria-hidden
+              className="absolute left-1 sm:left-2 top-2 bottom-2 w-px
+                bg-gradient-to-b from-primary/50 via-secondary/30 to-transparent"
+            />
+
+            {experiences.map((exp, i) => (
+              <motion.div key={exp.role} custom={i} variants={fadeUp} className="relative">
+                {/* Dot */}
+                <span
+                  aria-hidden
+                  className="absolute -left-[1.375rem] sm:-left-[2.125rem] top-5
+                    w-3 h-3 rounded-full border-2 border-primary bg-background-dark
+                    shadow-[0_0_12px_rgba(68,38,217,0.5)]"
+                />
+
+                <RevealCard className="p-5 md:p-6 border border-white/8 bg-white/[0.03] rounded-2xl">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                     <div>
-                      <p className="text-foreground font-semibold">
-                        {area.title}
+                      <p className="text-[11px] uppercase tracking-widest text-foreground/40 font-mono mb-1">
+                        {exp.company}
                       </p>
-                      <p className="text-foreground/60 text-sm">
-                        {area.description}
+                      <h4 className="text-lg font-bold text-foreground">{exp.role}</h4>
+                    </div>
+                    <div className="text-xs text-foreground/40 sm:text-right space-y-0.5 shrink-0">
+                      <p className="font-medium text-foreground/55">{exp.period}</p>
+                      <p className="flex items-center gap-1 sm:justify-end">
+                        <FiMapPin className="w-3 h-3" /> {exp.location}
                       </p>
                     </div>
                   </div>
+
+                  <p className="text-sm text-foreground/60 leading-relaxed mb-4">{exp.desc}</p>
+
                   <div className="flex flex-wrap gap-2">
-                    {area.tags.map((tag) => (
+                    {exp.highlights.map((h) => (
                       <span
-                        key={tag}
-                        className="px-3 py-1 text-xs rounded-full border border-gray-400 dark:border-slate-500 text-foreground/70"
+                        key={h}
+                        className="px-3 py-1 rounded-full text-xs font-medium
+                          border border-white/10 text-foreground/55
+                          hover:border-white/20 hover:text-foreground/75
+                          transition-colors duration-200"
                       >
-                        {tag}
+                        {h}
                       </span>
                     ))}
                   </div>
                 </RevealCard>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* ===================== STATS ===================== */}
-          <motion.div
-            variants={fadeInUp}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
-          >
-            {stats.map((stat) => (
-              <RevealCard
-                key={stat.label}
-                className="p-6 text-center border border-gray-400 dark:border-slate-500 bg-surface-1/50"
-              >
-                <stat.icon
-                  className={`w-7 h-7 mx-auto mb-3 ${stat.color}`}
-                />
-                <AnimatedStat
-                  value={stat.value}
-                  suffix={stat.suffix}
-                  className={`text-3xl md:text-4xl ${stat.color}`}
-                />
-                <p className="text-foreground/70 text-sm mt-1">
-                  {stat.label}
-                </p>
-              </RevealCard>
+              </motion.div>
             ))}
-          </motion.div>
-
-          {/* ===================== EXPERIENCE ===================== */}
-          <motion.div variants={fadeInUp} className="space-y-8">
-            <div className="text-center space-y-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-foreground/60">
-                Journey
-              </p>
-              <h3 className="text-3xl font-bold text-foreground">
-                Experience
-              </h3>
-            </div>
-
-            <div className="relative pl-4 sm:pl-8">
-              <div className="absolute left-1 sm:left-2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/60 via-secondary/40 to-transparent" />
-              <div className="space-y-6">
-                {experiences.map((exp) => (
-                  <RevealCard
-                    key={exp.role}
-                    className="p-6 md:p-7 border border-gray-400 dark:border-slate-500 bg-surface-1/40 relative"
-                  >
-                    <span className="absolute -left-3 top-6 h-3 w-3 rounded-full bg-primary shadow-[0_0_15px_rgba(68,38,217,0.6)]" />
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                      <div>
-                        <p className="text-sm uppercase tracking-widest text-foreground/60">
-                          {exp.company}
-                        </p>
-                        <h4 className="text-xl font-semibold text-foreground">
-                          {exp.role}
-                        </h4>
-                      </div>
-                      <div className="text-foreground/60 text-sm md:text-right">
-                        <p>{exp.period}</p>
-                        <p>{exp.location}</p>
-                      </div>
-                    </div>
-
-                    <p className="text-foreground/70 mt-3 mb-4">
-                      {exp.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {exp.highlights.map((highlight) => (
-                        <span
-                          key={highlight}
-                          className="px-3 py-1 rounded-full border border-gray-400 dark:border-slate-500 text-xs text-foreground/70"
-                        >
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
-                  </RevealCard>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </motion.div>
+
       </div>
     </section>
   );

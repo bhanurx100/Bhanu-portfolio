@@ -45,11 +45,13 @@ export default function SkillsCloud() {
   if (!mounted) return null;
 
   return (
-    <div className="w-full h-full">
+    <div className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] overflow-hidden">
       <Cloud
         options={{
           noMouse: true,
           pinchZoom: false,
+          wheelZoom: false,
+          outlineColour: 'transparent',
           maxSpeed: 0.02,
           initial: [0.8, -0.3],
         }}
@@ -57,7 +59,7 @@ export default function SkillsCloud() {
         {ICONS.map((icon) =>
           renderSimpleIcon({
             icon,
-            size: 110,
+            size:  icon.slug === 'html5' ? 130 : 110,
             aProps: {
               onClick: (e) => e.preventDefault(),
             },

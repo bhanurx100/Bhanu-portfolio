@@ -86,7 +86,7 @@ export default function MobileNav() {
         transition={{ delay: 0.5 }}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'fixed top-4 right-4 z-[60] lg:hidden max-w-[calc(100vw-1rem)]',
+          'fixed top-4 right-4 z-[60] lg:hidden',
           'p-3 rounded-xl overflow-hidden',
           'bg-gray-900/90 text-gray-100',
           'backdrop-blur-xl border border-white/10 shadow-lg'

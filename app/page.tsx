@@ -23,8 +23,6 @@ import HeroNew from '@/components/sections/HeroNew';
 import Projects from '@/components/sections/Projects';
 import About from '@/components/sections/About';
 import Contact from '@/components/sections/Contact';
-import MarqueeScroll from '@/components/ui/MarqueeScroll';
-import { getMarqueeSkills } from '@/data/skills';
 import DeferredNavigation from '@/components/navigation/DeferredNavigation';
 
 // // ── Navigation chrome — deferred; not needed for first paint ──────────────
@@ -41,9 +39,6 @@ import DeferredNavigation from '@/components/navigation/DeferredNavigation';
 //   { ssr: false }
 // );
 
-// Pre-compute on the server — embedded in RSC payload, zero client work.
-const skills = getMarqueeSkills();
-const marqueeItems = skills.map(({ id, label, color }) => ({ id, label, color }));
 
 export default function Home() {
   return (
@@ -51,23 +46,41 @@ export default function Home() {
       {/* ── Hero ── */}
       <HeroNew />
 
-      {/* ── Tech stack marquee ── */}
+      {/* ── Tech stack badges ── */}
       <section
-        className="py-12 border-y border-white/5
+        className="py-8 border-y border-white/5
           bg-background dark:bg-gradient-to-b
           dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
         aria-label="Technologies"
       >
-        <div className="max-w-7xl mx-auto px-6 mb-6">
-          <h2 className="text-center text-foreground/30 text-xs uppercase tracking-[0.3em] font-mono">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <p className="text-center text-foreground/30 text-[10px] uppercase tracking-[0.3em] font-mono mb-5">
             Technologies I work with
-          </h2>
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {[
+              'React','Next.js','TypeScript','JavaScript',
+              'Tailwind CSS','Node.js','Express','MongoDB',
+              'HTML5','CSS3','Redux','Framer Motion',
+              'Three.js','Firebase','Git','REST API',
+              'PostgreSQL','Figma',
+            ].map((skill) => (
+              <span
+                key={skill}
+                className="px-3 py-1 rounded-full text-[11px] font-medium
+                border border-cyan-500/10
+                bg-gradient-to-br from-slate-900/80 to-slate-800/40
+                text-slate-300
+                hover:border-cyan-400/30
+                hover:text-cyan-300
+                hover:bg-cyan-500/5
+                transition-all duration-200 cursor-default"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
-        <MarqueeScroll
-          items={marqueeItems}
-          speed={55}
-          pauseOnHover
-        />
       </section>
 
       {/* ── Content sections ── */}

@@ -125,12 +125,21 @@ export default function ProjectDetailModal({ project, onClose }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  /* Lock body scroll while open */
+ 
   useEffect(() => {
     if (!project) return;
-    const prev = document.body.style.overflow;
+    const scrollY = window.scrollY;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    };
   }, [project]);
 
   /* Keyboard close + focus trap */
@@ -159,6 +168,7 @@ export default function ProjectDetailModal({ project, onClose }: Props) {
           initial="hidden"
           animate="visible"
           exit="exit"
+          onWheel={(e) => e.stopPropagation()}
           className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6"
           role="dialog"
           aria-modal="true"
@@ -179,7 +189,7 @@ export default function ProjectDetailModal({ project, onClose }: Props) {
               'bg-[#0d0f14]/95 backdrop-blur-2xl',
               'border border-white/10 rounded-t-3xl sm:rounded-3xl',
               'shadow-[0_32px_80px_rgba(0,0,0,0.7)]',
-              'max-h-[92dvh] sm:max-h-[88vh]',
+              'max-h-[96dvh] sm:max-h-[88vh]',
               'flex flex-col overflow-hidden min-h-0',
             )}
           >
@@ -222,10 +232,10 @@ export default function ProjectDetailModal({ project, onClose }: Props) {
             </div>
 
             {/* ── Scrollable body ───────────────────────────────────────── */}
+            
             <div
               ref={scrollRef}
-              className="flex-1 overflow-y-auto overscroll-contain px-5 md:px-6 py-5 space-y-4
-                scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10"
+              className="flex-1 overflow-y-scroll px-5 md:px-6 py-5 space-y-4"
             >
               {/* Hero image */}
               <motion.div

@@ -35,6 +35,7 @@ export default function MobileNav() {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -109,7 +110,7 @@ export default function MobileNav() {
               initial="closed"
               animate="open"
               exit="closed"
-              className="fixed top-0 right-0 bottom-0 w-[280px] bg-gray-900/95 border-l border-white/10 z-[56] lg:hidden"
+              className="fixed top-0 right-0 bottom-0 w-[280px] bg-gray-900/95 border-l border-white/10 z-[56] lg:hidden pb-safe"
             >
               <div className="flex flex-col h-full px-6 py-20">
                 <div className="flex flex-col gap-2">

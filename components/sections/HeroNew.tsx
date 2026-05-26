@@ -24,7 +24,7 @@ export default function HeroNew() {
       id="home"
       className="relative min-h-screen flex items-center px-6 py-20 lg:py-32 overflow-hidden z-10"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-7xl mx-auto w-full min-w-0 overflow-x-hidden">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* ================= LEFT SIDE ================= */}

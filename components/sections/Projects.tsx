@@ -46,9 +46,10 @@ export default function Projects() {
 
   return (
     <>
+      
       <section
         id="projects"
-        className="relative py-24 md:py-32 px-5 md:px-8
+        className="relative py-16 md:py-32 px-4 md:px-8
           bg-background dark:bg-gradient-to-b
           dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
       >

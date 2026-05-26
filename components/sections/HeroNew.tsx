@@ -31,9 +31,9 @@ export default function HeroNew() {
           <div className="lg:col-span-7 space-y-6 lg:space-y-8">
 
             {/* Availability badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-2 border border-border">
+            <div className="inline-flex max-w-full items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-surface-2 border border-border">
               <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span className="text-sm text-gray-900 dark:text-white font-mono">
+              <span className="text-xs sm:text-sm text-gray-900 dark:text-white font-mono whitespace-nowrap">
                 Available for new opportunities
               </span>
             </div>

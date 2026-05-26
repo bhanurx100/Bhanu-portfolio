@@ -184,11 +184,12 @@ export default function Contact() {
   };
 
   return (
+    
     <section
       id="contact"
-      className="py-20 px-6 bg-background dark:bg-gradient-to-b dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
+      className="py-16 px-4 sm:px-6 overflow-hidden bg-background dark:bg-gradient-to-b dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto min-w-0">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -230,9 +231,10 @@ export default function Contact() {
                       <div className={`p-3 rounded-2xl bg-surface-2/60 ${method.color} transition-all duration-300 group-hover:scale-110`}>
                         <method.icon className="w-6 h-6" />
                       </div>
-                      <div className="flex-1">
+                      
+                      <div className="flex-1 min-w-0">
                         <p className="text-xs uppercase tracking-wide text-foreground/60 mb-1">{method.label}</p>
-                        <p className="text-base font-semibold text-foreground mb-1">{method.value}</p>
+                        <p className="text-sm font-semibold text-foreground mb-1 break-all">{method.value}</p>
                         {method.copyable && (
                           <button
                             onClick={copyEmail}
@@ -287,14 +289,14 @@ export default function Contact() {
               {/* Social Links */}
               <div className="space-y-4">
                 <p className="text-sm uppercase tracking-[0.2em] text-foreground/60">Connect on Social</p>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {socialLinks.map((social, index) => (
                     <a
                       key={index}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative overflow-hidden rounded-2xl border border-gray-400 dark:border-slate-500 bg-surface-1/40 p-5 transition-all duration-300 hover:shadow-glow-sm"
+                      className="group relative overflow-hidden rounded-2xl border border-gray-400 dark:border-slate-500 bg-surface-1/40 p-4 transition-all duration-300 hover:shadow-glow-sm min-w-0"
                     >
                       <div className="relative z-10 flex items-center gap-4">
                         <div className={`p-3 rounded-xl bg-gradient-to-br ${social.color} ${social.hoverColor} text-white transition-all duration-300 group-hover:scale-110`}>

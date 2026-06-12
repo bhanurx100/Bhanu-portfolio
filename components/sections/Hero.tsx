@@ -45,7 +45,7 @@ export default function Hero() {
 
   const downloadResume = () => {
     // Resume link - using Google Drive link
-    window.open('https://drive.google.com/file/d/1yiYj0ztQUDDegX-8qnq2xy4kbh1I8oF-/view?usp=sharing', '_blank');
+    window.open('https://drive.google.com/file/d/1N-FYPwaQvCVFeelk_5NKbmEx9UVvu-RC/view?usp=sharing', '_blank');
   };
 
   return (

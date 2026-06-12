@@ -22,8 +22,7 @@ const baseSkills: BaseSkill[] = [
 
   // ================= BACKEND =================
   { id: 'nodejs', label: 'Node.js', category: 'backend' },
-  { id: 'express', label: 'Express', category: 'backend' },
-  { id: 'python', label: 'Python', category: 'backend' },
+  { id: 'express', label: 'Express', category: 'backend' },  
   { id: 'sql', label: 'SQL', category: 'backend' },
   { id: 'postgresql', label: 'PostgreSQL', category: 'backend' },
   { id: 'mongodb', label: 'MongoDB', category: 'backend' },

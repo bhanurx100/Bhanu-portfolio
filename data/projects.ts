@@ -72,64 +72,6 @@ export const projects: ProjectDetail[] = [
   },
 
   {
-    id: "stockpilot",
-    title: "StockPilot",
-    tagline: "Inventory Management SaaS Dashboard",
-    description:
-      "Scalable SaaS inventory dashboard with real-time stock monitoring, automated reordering, and interactive analytics. 3× faster queries via MongoDB indexing and virtualized tables handling 10k+ SKUs.",
-    image: "/images/stockpilot.png",
-    tech: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS", "Recharts", "SWR"],
-    metrics: {
-      performance: "3× faster queries",
-      scale: "10k+ items",
-    },
-    links: {
-      github: "https://github.com/bhanurx100/stockpilot-inventory-saas",
-      live: "#",
-    },
-    featured: true,
-
-    // ── Case-study content ──
-    overview:
-      "StockPilot is a full-stack SaaS platform designed to replace spreadsheet-based inventory workflows for small-to-mid-sized businesses. The dashboard surfaces real-time stock levels, low-stock alerts, supplier performance, and revenue trends inside a single cohesive UI.",
-    problem:
-      "SMB warehouse teams were spending 3–4 hours per day cross-referencing Excel sheets and manually triggering purchase orders. The goal was to cut that time by 80% through automation and a single source of truth.",
-    features: [
-      "Real-time stock level monitoring with WebSocket-backed updates",
-      "Automated low-stock alerts with configurable reorder thresholds",
-      "Supplier management with lead-time tracking",
-      "Interactive Recharts dashboards (revenue, turnover, shrinkage)",
-      "Role-based access control (admin / warehouse / read-only)",
-      "CSV import/export for bulk SKU management",
-      "Virtualized data tables (react-virtual) for 10k+ row catalogs",
-    ],
-    architecture:
-      "Next.js App Router for server/client component splitting. MongoDB Atlas with compound indexes on (sku, warehouseId, updatedAt) for sub-50ms reads. SWR handles client-side cache invalidation with a 30s revalidation window. Tailwind + Radix UI primitives keep the design system consistent.",
-    challenges: [
-      "Rendering 10k+ rows without layout jank — solved with react-virtual windowing",
-      "Keeping real-time state consistent across multiple browser tabs using BroadcastChannel",
-      "Designing a flexible permission model that doesn't require schema migrations per tenant",
-    ],
-    optimizations: [
-      "MongoDB compound indexes reduced average query time from 420ms → 140ms",
-      "SWR deduplication cut redundant API calls by ~65% on the dashboard page",
-      "Dynamic imports for Recharts reduced initial JS bundle by 38KB gzipped",
-    ],
-    uxDecisions: [
-      "Sticky summary bar at the top so KPIs are always visible while scrolling the table",
-      "Color-coded stock-status chips (green / amber / red) instead of raw numbers for instant scanning",
-      "Inline editing in the table rather than a separate form page to reduce context switching",
-    ],
-    responsibilities: [
-      "End-to-end frontend architecture (Next.js App Router, component library)",
-      "MongoDB schema design and indexing strategy",
-      "Real-time update pipeline (WebSocket → SWR mutation)",
-      "Data visualization layer (Recharts, custom tooltips)",
-      "Responsive design and accessibility audit",
-    ],
-  },
-
-  {
     id: "spendwise",
     title: "SpendWise",
     tagline: "Expense Sharing Platform",
@@ -195,6 +137,64 @@ export const projects: ProjectDetail[] = [
     demoNote:
     "Live demo available — create groups, add expenses, and explore real-time settlement calculations and analytics dashboards.",
 
+  },
+
+  {
+    id: "stockpilot",
+    title: "StockPilot",
+    tagline: "Inventory Management SaaS Dashboard",
+    description:
+      "Scalable SaaS inventory dashboard with real-time stock monitoring, automated reordering, and interactive analytics. 3× faster queries via MongoDB indexing and virtualized tables handling 10k+ SKUs.",
+    image: "/images/stockpilot.png",
+    tech: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS", "Recharts", "SWR"],
+    metrics: {
+      performance: "3× faster queries",
+      scale: "10k+ items",
+    },
+    links: {
+      github: "https://github.com/bhanurx100/stockpilot-inventory-saas",
+      live: "#",
+    },
+    featured: true,
+
+    // ── Case-study content ──
+    overview:
+      "StockPilot is a full-stack SaaS platform designed to replace spreadsheet-based inventory workflows for small-to-mid-sized businesses. The dashboard surfaces real-time stock levels, low-stock alerts, supplier performance, and revenue trends inside a single cohesive UI.",
+    problem:
+      "SMB warehouse teams were spending 3–4 hours per day cross-referencing Excel sheets and manually triggering purchase orders. The goal was to cut that time by 80% through automation and a single source of truth.",
+    features: [
+      "Real-time stock level monitoring with WebSocket-backed updates",
+      "Automated low-stock alerts with configurable reorder thresholds",
+      "Supplier management with lead-time tracking",
+      "Interactive Recharts dashboards (revenue, turnover, shrinkage)",
+      "Role-based access control (admin / warehouse / read-only)",
+      "CSV import/export for bulk SKU management",
+      "Virtualized data tables (react-virtual) for 10k+ row catalogs",
+    ],
+    architecture:
+      "Next.js App Router for server/client component splitting. MongoDB Atlas with compound indexes on (sku, warehouseId, updatedAt) for sub-50ms reads. SWR handles client-side cache invalidation with a 30s revalidation window. Tailwind + Radix UI primitives keep the design system consistent.",
+    challenges: [
+      "Rendering 10k+ rows without layout jank — solved with react-virtual windowing",
+      "Keeping real-time state consistent across multiple browser tabs using BroadcastChannel",
+      "Designing a flexible permission model that doesn't require schema migrations per tenant",
+    ],
+    optimizations: [
+      "MongoDB compound indexes reduced average query time from 420ms → 140ms",
+      "SWR deduplication cut redundant API calls by ~65% on the dashboard page",
+      "Dynamic imports for Recharts reduced initial JS bundle by 38KB gzipped",
+    ],
+    uxDecisions: [
+      "Sticky summary bar at the top so KPIs are always visible while scrolling the table",
+      "Color-coded stock-status chips (green / amber / red) instead of raw numbers for instant scanning",
+      "Inline editing in the table rather than a separate form page to reduce context switching",
+    ],
+    responsibilities: [
+      "End-to-end frontend architecture (Next.js App Router, component library)",
+      "MongoDB schema design and indexing strategy",
+      "Real-time update pipeline (WebSocket → SWR mutation)",
+      "Data visualization layer (Recharts, custom tooltips)",
+      "Responsive design and accessibility audit",
+    ],
   },
 
   {
